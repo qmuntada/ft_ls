@@ -1,2 +1,1 @@
-# ft_ls
-ft_ls project - 42
+#ft_ls - 42 Project
