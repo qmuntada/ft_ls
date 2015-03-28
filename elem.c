@@ -1,32 +1,33 @@
 
 #include "ft_ls.h"
 
-t_elem	*elemnew(struct dirent *file, char *path)
+t_elem	*elemnew(char *name, char *path, int type)
 {
 	t_elem			*elem;
 	struct stat		fstat;
 
 	elem = malloc(sizeof(t_elem));
-	elem->name = file->d_name;
+	elem->name = name;
 	elem->path = path;
-	if (stat(ft_strjoin(path, file->d_name), &fstat) == -1)
-		basicerror("ft_ls: ", elem->name, 0);
-	else
+	if (lstat(ft_strjoin(path, name), &fstat) == -1)
 	{
-		elem->st_mode = fstat.st_mode;
-		elem->st_nlink = fstat.st_nlink;
-		elem->st_uid = fstat.st_uid;
-		elem->st_gid = fstat.st_gid;
-		elem->st_size = fstat.st_size;
-		elem->st_blocks = fstat.st_blocks;
-		elem->date = fstat.st_mtimespec.tv_sec;
+		basicerror("ft_ls: ", elem->name, 0);
+		return (NULL);
 	}
-	printf("%s%s\n", elem->path, elem->name);
+	elem->st_mode = fstat.st_mode;
+	elem->st_nlink = fstat.st_nlink;
+	elem->st_uid = fstat.st_uid;
+	elem->st_gid = fstat.st_gid;
+	elem->st_size = fstat.st_size;
+	elem->st_blocks = fstat.st_blocks;
+	elem->date = fstat.st_mtime;
+	elem->type = type;
+	elem->st_rdev = fstat.st_rdev;
 	elem->next = NULL;
 	return (elem);
 }
 
-int		ft_elemget(t_elem **files, struct dirent *file, char *path)
+int		elemget(t_elem **files, struct dirent *file, char *path)
 {
 	t_elem	*list;
 
@@ -37,9 +38,24 @@ int		ft_elemget(t_elem **files, struct dirent *file, char *path)
 	{
 		while (list->next)
 			list = list->next;
-		list->next = elemnew(file, path);
+		list->next = elemnew(file->d_name, path, file->d_type);
 	}
 	else
-		*files = elemnew(file, path);
+		*files = elemnew(file->d_name, path, file->d_type);
 	return (1);
+}
+
+void	elemgetfiles(t_elem **files, char *name, char *path)
+{
+	t_elem *list;
+
+	list = *files;
+	if (list)
+	{
+		while (list->next)
+			list = list->next;
+		list->next = elemnew(name, path, 0);
+	}
+	else
+		*files = elemnew(name, path, 0);
 }

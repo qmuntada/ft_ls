@@ -1,16 +1,29 @@
 
 #include "ft_ls.h"
 
-
-void	display_file(t_opt arg, t_elem *files)
+void	display_file(t_opt arg, t_elem *files, int multidir)
 {
-	// FIRST : TRI FICHIER CACHE -a (supression)
-	// THEN : TRI TEMPS / ALPHA / REVERSE -tr
-	// THEN : AFFICHAGE SIMPLE OU LONG -l
-	// THEN : RECURSION : ON REDEMARRE LA FONCTION
+	t_elem	*cur;
+
+	if (!files)
+		return ;
+	cur = files;
+	sort(&cur, cmp_alpha);
+	arg.t == 1 ? sort(&cur, cmp_time) : NULL;
+	arg.r == 1 ? reversesort(&cur) : NULL;
+	if (multidir || arg._r)
+	{
+		ft_putstr(cur->path);
+		ft_putstr(":\n");
+	}
+	if (arg.l == 1)
+		ls_long(arg, cur);
+	else
+		ls_simple(arg, cur);
+	arg._r == 1 ? recursion(arg, cur) : NULL;
 }
 
-void	do_ls_dir(t_opt arg, t_list *path)
+void	do_ls_dir(t_opt arg, t_list *path, int multidir)
 {
 	t_list	*cur;
 	t_elem	*files;
@@ -23,13 +36,13 @@ void	do_ls_dir(t_opt arg, t_list *path)
 		if ((dir = opendir(cur->content)) == NULL)
 			basicerror("ft_ls: ", cur->content, 0);
 		else
-		{
-			while (ft_elemget(&files, readdir(dir), ft_strjoin(cur->content, "/")) != 0)
+			while (elemget(&files, readdir(dir), \
+				ft_strjoin(cur->content, "/")) != 0)
 				;
-		}
 		cur = cur->next;
 	}
-	display_file(arg, files);
+	if (files)
+		display_file(arg, files, multidir);
 }
 
 void	do_ls_file(t_opt arg, t_list *path)
@@ -41,10 +54,11 @@ void	do_ls_file(t_opt arg, t_list *path)
 	files = NULL;
 	while (cur)
 	{
-		// version de ft_elemget sans la struct dirent
+		elemgetfiles(&files, cur->content, "./");
 		cur = cur->next;
 	}
-	display_file(arg, files);
+	if (files)
+		display_file(arg, files, 0);
 }
 
 void	core(t_opt arg, t_list *path)
@@ -52,29 +66,25 @@ void	core(t_opt arg, t_list *path)
 	DIR		*dir;
 	t_list	*file;
 	t_list	*directory;
+	t_list	*cur;
 
 	file = NULL;
 	directory = NULL;
-	while (path)
+	cur = path;
+	while (cur)
 	{
-		if ((dir = opendir(path->content)) == NULL)
-		{
-			if (errno != ENOTDIR)
-				basicerror("ft_ls: ", path->content, 0);
-			else
-				ft_lstpushback(&file ,path->content, path->content_size);
-		}
+		if ((dir = opendir(cur->content)) == NULL)
+			errno != ENOTDIR ? basicerror("ft_ls: ", cur->content, 0) : \
+				ft_lstpushback(&file ,cur->content, cur->content_size);
 		else
 		{
-			ft_lstpushback(&directory, path->content, path->content_size);
+			ft_lstpushback(&directory, cur->content, cur->content_size);
 			if (closedir(dir) == -1)
-				basicerror("ft_ls: ", path->content, 0);
+				basicerror("ft_ls: ", cur->content, 0);
 		}
-		path = path->next;
+		cur = cur->next;
 	}
-	if (file)
-		do_ls_file(arg, file);
-	if (directory)
-		do_ls_dir(arg, directory);
-	//free(path);
+	file ? do_ls_file(arg, file) : NULL;
+	directory ? do_ls_dir(arg, directory, (directory->next != NULL)) : NULL;
+	//free(path); Need a real function that does free the list
 }
