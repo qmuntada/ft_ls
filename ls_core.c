@@ -19,10 +19,7 @@ void	display_file(t_opt arg, t_elem *files, int multidir)
 		ft_putstr(cur->path);
 		ft_putstr(":\n");
 	}
-	if (arg.l == 1 || arg.g == 1)
-		ls_long(arg, cur);
-	else
-		ls_simple(arg, cur);
+	(arg.l == 1 || arg.g == 1) ? ls_long(arg, cur) : ls_simple(arg, cur);
 	arg._r == 1 ? recursion(arg, cur) : NULL;
 }
 

@@ -43,7 +43,6 @@ void	get_param(int nb, char **param, t_opt *arg, t_list **path)
 
 	i = -1;
 	type = 1;
-	// first let's differentiate arg from path
 	while (++i < nb)
 	{
 		if (analize_str(param[i + 1]) == 0)

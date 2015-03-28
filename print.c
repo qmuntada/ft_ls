@@ -20,7 +20,7 @@ void	print_access(t_elem *elem)
 	ft_putchar((elem->st_mode & S_IROTH) ? 'r' : '-');
 	ft_putchar((elem->st_mode & S_IWOTH) ? 'w' : '-');
 	ft_putchar((elem->st_mode & S_IXOTH) ? 'x' : '-');
-	ft_putstr("  ");
+	ft_putstr(" ");
 }
 
 void	print_int(unsigned int nlink, unsigned int spacemax)
