@@ -18,18 +18,18 @@ void	get_arg(t_opt *arg, char *str)
 	i = -1;
 	while (str[++i])
 	{
-		if (one_of(str[i], "-1lRart"))
+		if (one_of(str[i], "-1lRafgrtu"))
 		{
-			if (str[i] == 'l')
-				arg->l = 1;
-			else if (str[i] == 'R')
-				arg->_r = 1;
-			else if (str[i] == 'a')
-				arg->a = 1;
-			else if (str[i] == 'r')
-				arg->r = 1;
-			else if (str[i] == 't')
-				arg->t = 1;
+			arg->l = (str[i] == 'l' ? 1 : arg->l);
+			arg->_r = (str[i] == 'R' ? 1 : arg->_r);
+			arg->a = (str[i] == 'a' ? 1 : arg->a);
+			arg->r = (str[i] == 'r' ? 1 : arg->r);
+			arg->t = (str[i] == 't' ? 1 : arg->t);
+			arg->u = (str[i] == 'u' ? 1 : arg->u);
+			arg->f = (str[i] == 'f' ? 1 : arg->f);
+			arg->l = (str[i] == 'f' ? 0 : arg->l);
+			arg->a = (str[i] == 'f' ? 1 : arg->a);
+			arg->g = (str[i] == 'g' ? 1 : arg->g);
 		}
 		else
 			error_arg(str[i]);
@@ -60,7 +60,7 @@ int		main(int ac, char **av)
 	t_opt	arg;
 	t_list	*path;
 
-	arg = (t_opt){0, 0, 0, 0, 0};
+	arg = (t_opt){0, 0, 0, 0, 0, 0, 0, 0};
 	path = NULL;
 	if (ac > 1)
 		get_param(ac - 1, av, &arg, &path);

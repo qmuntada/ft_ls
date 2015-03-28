@@ -1,7 +1,7 @@
 
 #include "ft_ls.h"
 
-t_elem	*elemnew(char *name, char *path, int type)
+t_elem	*elemnew(char *name, char *path, int type, t_opt arg)
 {
 	t_elem			*elem;
 	struct stat		fstat;
@@ -20,14 +20,14 @@ t_elem	*elemnew(char *name, char *path, int type)
 	elem->st_gid = fstat.st_gid;
 	elem->st_size = fstat.st_size;
 	elem->st_blocks = fstat.st_blocks;
-	elem->date = fstat.st_mtime;
+	elem->date = (arg.u == 1 ? fstat.st_atime : fstat.st_mtime);
 	elem->type = type;
 	elem->st_rdev = fstat.st_rdev;
 	elem->next = NULL;
 	return (elem);
 }
 
-int		elemget(t_elem **files, struct dirent *file, char *path)
+int		elemget(t_elem **files, struct dirent *file, char *path, t_opt arg)
 {
 	t_elem	*list;
 
@@ -38,14 +38,14 @@ int		elemget(t_elem **files, struct dirent *file, char *path)
 	{
 		while (list->next)
 			list = list->next;
-		list->next = elemnew(file->d_name, path, file->d_type);
+		list->next = elemnew(file->d_name, path, file->d_type, arg);
 	}
 	else
-		*files = elemnew(file->d_name, path, file->d_type);
+		*files = elemnew(file->d_name, path, file->d_type, arg);
 	return (1);
 }
 
-void	elemgetfiles(t_elem **files, char *name, char *path)
+void	elemgetfiles(t_elem **files, char *name, char *path, t_opt arg)
 {
 	t_elem *list;
 
@@ -54,8 +54,8 @@ void	elemgetfiles(t_elem **files, char *name, char *path)
 	{
 		while (list->next)
 			list = list->next;
-		list->next = elemnew(name, path, 0);
+		list->next = elemnew(name, path, 0, arg);
 	}
 	else
-		*files = elemnew(name, path, 0);
+		*files = elemnew(name, path, 0, arg);
 }

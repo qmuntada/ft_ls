@@ -8,15 +8,18 @@ void	display_file(t_opt arg, t_elem *files, int multidir)
 	if (!files)
 		return ;
 	cur = files;
-	sort(&cur, cmp_alpha);
-	arg.t == 1 ? sort(&cur, cmp_time) : NULL;
-	arg.r == 1 ? reversesort(&cur) : NULL;
+	if (arg.f == 0)
+	{
+		sort(&cur, cmp_alpha);
+		(arg.t == 1 || arg.u == 1) ? sort(&cur, cmp_time) : NULL;
+		arg.r == 1 ? reversesort(&cur) : NULL;
+	}
 	if (multidir || arg._r)
 	{
 		ft_putstr(cur->path);
 		ft_putstr(":\n");
 	}
-	if (arg.l == 1)
+	if (arg.l == 1 || arg.g == 1)
 		ls_long(arg, cur);
 	else
 		ls_simple(arg, cur);
@@ -37,7 +40,7 @@ void	do_ls_dir(t_opt arg, t_list *path, int multidir)
 			basicerror("ft_ls: ", cur->content, 0);
 		else
 			while (elemget(&files, readdir(dir), \
-				ft_strjoin(cur->content, "/")) != 0)
+				ft_strjoin(cur->content, "/"), arg) != 0)
 				;
 		cur = cur->next;
 	}
@@ -54,7 +57,7 @@ void	do_ls_file(t_opt arg, t_list *path)
 	files = NULL;
 	while (cur)
 	{
-		elemgetfiles(&files, cur->content, "./");
+		elemgetfiles(&files, cur->content, "./", arg);
 		cur = cur->next;
 	}
 	if (files)

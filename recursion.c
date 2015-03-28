@@ -10,7 +10,7 @@ void	do_recursion(t_opt arg, char *path)
 	if ((dir = opendir(path)) != NULL)
 	{
 		while (elemget(&files, readdir(dir), \
-					ft_strjoin(path, "/")) != 0)
+					ft_strjoin(path, "/"), arg) != 0)
 			;
 	}
 	else if (errno != ENOTDIR)

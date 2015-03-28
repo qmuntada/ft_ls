@@ -15,21 +15,11 @@
 # include <unistd.h>
 # include <errno.h>
 
-/*# define DT_UNKNOWN	0
-# define DT_FIFO	1
-# define DT_CHR		2
-# define DT_DIR		4
-# define DT_BLK		6
-# define DT_REG		8
-# define DT_LNK		10
-# define DT_SOCK	12
-# define DT_WHT		14
-*/
 # define MINORBITS 20
 # define MINORMASK ((1U << MINORBITS) - 1)
 # define MAJOR(x) ((unsigned int) ((x) >> MINORBITS))
 # define MINOR(x) ((unsigned int) ((x) & MINORMASK))
-//# define MKDEV(ma, mi) (((ma) << MINORBITS) | (mi))
+# define MKDEV(ma, mi) (((ma) << MINORBITS) | (mi))
 
 typedef struct	s_opt
 {
@@ -38,6 +28,9 @@ typedef struct	s_opt
 	int		a;
 	int		r;
 	int		t;
+	int		u;
+	int		f;
+	int		g;
 }				t_opt;
 
 typedef struct	s_elem
@@ -75,8 +68,8 @@ void	basicerror(char *name, char *error, int ex);
 void	core(t_opt arg, t_list *path);
 void	display_file(t_opt arg, t_elem *files, int multidir);
 
-int		elemget(t_elem **files, struct dirent *file, char *path);
-void	elemgetfiles(t_elem **files, char *name, char *path);
+int		elemget(t_elem **files, struct dirent *file, char *path, t_opt arg);
+void	elemgetfiles(t_elem **files, char *name, char *path, t_opt arg);
 
 void	display_date(time_t date);
 
