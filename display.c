@@ -14,16 +14,19 @@ void	ls_simple(t_opt arg, t_elem *files)
 	}
 }
 
-void	ls_long(t_opt arg, t_elem *files)
+void	ls_long(t_opt arg, t_elem *files, int dir)
 {
 	t_elem	*cur;
 	t_size	size;
 
 	cur = files;
 	size = get_size(arg, files);
-	ft_putstr("total ");
-	ft_putnbr(size.total / 2);
-	ft_putchar('\n');
+	if (dir)
+	{
+		ft_putstr("total ");
+		ft_putnbr(size.total / 2);
+		ft_putchar('\n');
+	}
 	while (cur)
 	{
 		if (!(arg.a == 0 && cur->name[0] == '.'))

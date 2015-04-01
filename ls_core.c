@@ -14,12 +14,13 @@ void	display_file(t_opt arg, t_elem *files, int multidir)
 		(arg.t == 1 || arg.u == 1) ? sort(&cur, cmp_time) : NULL;
 		arg.r == 1 ? reversesort(&cur) : NULL;
 	}
-	if (multidir || arg._r)
+	if (multidir)
 	{
 		ft_putstr(cur->path);
 		ft_putstr(":\n");
 	}
-	(arg.l == 1 || arg.g == 1) ? ls_long(arg, cur) : ls_simple(arg, cur);
+	(arg.l == 1 || arg.g == 1) ? \
+		ls_long(arg, cur, multidir) : ls_simple(arg, cur);
 	arg._r == 1 ? recursion(arg, cur) : NULL;
 }
 
@@ -36,13 +37,17 @@ void	do_ls_dir(t_opt arg, t_list *path, int multidir)
 		if ((dir = opendir(cur->content)) == NULL)
 			basicerror("ft_ls: ", cur->content, 0);
 		else
+		{
 			while (elemget(&files, readdir(dir), \
 				ft_strjoin(cur->content, "/"), arg) != 0)
 				;
+			if (files)
+				display_file(arg, files, (multidir || arg._r));
+			//free files;
+			files = NULL;
+		}
 		cur = cur->next;
 	}
-	if (files)
-		display_file(arg, files, multidir);
 }
 
 void	do_ls_file(t_opt arg, t_list *path)
@@ -55,10 +60,10 @@ void	do_ls_file(t_opt arg, t_list *path)
 	while (cur)
 	{
 		elemgetfiles(&files, cur->content, "./", arg);
+		if (files)
+			display_file(arg, files, 0);
 		cur = cur->next;
 	}
-	if (files)
-		display_file(arg, files, 0);
 }
 
 void	core(t_opt arg, t_list *path)

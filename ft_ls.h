@@ -82,7 +82,7 @@ int		cmp_time(t_elem *elem1, t_elem *elem2);
 void	recursion(t_opt arg, t_elem *files);
 
 void	ls_simple(t_opt arg, t_elem *files);
-void	ls_long(t_opt arg, t_elem *files);
+void	ls_long(t_opt arg, t_elem *files, int dir);
 
 t_size	get_size(t_opt arg, t_elem *files);
 

@@ -20,7 +20,7 @@ void	print_access(t_elem *elem)
 	ft_putchar((elem->st_mode & S_IROTH) ? 'r' : '-');
 	ft_putchar((elem->st_mode & S_IWOTH) ? 'w' : '-');
 	ft_putchar((elem->st_mode & S_IXOTH) ? 'x' : '-');
-	ft_putstr(" ");
+	ft_putstr("  ");
 }
 
 void	print_int(unsigned int nlink, unsigned int spacemax)
@@ -31,7 +31,7 @@ void	print_int(unsigned int nlink, unsigned int spacemax)
 	while (n-- > 0)
 		ft_putchar(' ');
 	ft_putnbr(nlink);
-	ft_putchar(' ');
+	ft_putstr(" ");
 }
 
 void	print_str(char *str, unsigned int spacemax)
@@ -39,10 +39,10 @@ void	print_str(char *str, unsigned int spacemax)
 	unsigned int		n;
 
 	n = spacemax - (unsigned int)ft_strlen(str);
+	ft_putstr(str);
 	while (n-- > 0)
 		ft_putchar(' ');
-	ft_putstr(str);
-	ft_putchar(' ');
+	ft_putstr("  ");
 }
 
 void	print_majmin(t_elem *file, t_size size)
@@ -52,12 +52,12 @@ void	print_majmin(t_elem *file, t_size size)
 
 	min = (unsigned int)ft_strlen(ft_itoa(MINOR(file->st_rdev)));
 	maj = (unsigned int)ft_strlen(ft_itoa(MAJOR(file->st_rdev)));
+	ft_putnbr(maj);
 	while (maj < size.maj--)
 		ft_putchar(' ');
-	ft_putnbr(maj);
 	ft_putstr(", ");
+	ft_putnbr(min);
 	while (min < size.min--)
 		ft_putchar(' ');
-	ft_putnbr(min);
 	ft_putchar(' ');
 }
