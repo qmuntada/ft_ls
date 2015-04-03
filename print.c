@@ -52,11 +52,11 @@ void	print_majmin(t_elem *file, t_size size)
 
 	min = (unsigned int)ft_strlen(ft_itoa(MINOR(file->st_rdev)));
 	maj = (unsigned int)ft_strlen(ft_itoa(MAJOR(file->st_rdev)));
-	ft_putnbr(maj);
+	ft_putnbr(MAJOR(file->st_rdev));
 	while (maj < size.maj--)
 		ft_putchar(' ');
 	ft_putstr(", ");
-	ft_putnbr(min);
+	ft_putnbr(MINOR(file->st_rdev));
 	while (min < size.min--)
 		ft_putchar(' ');
 	ft_putchar(' ');

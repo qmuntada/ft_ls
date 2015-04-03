@@ -39,7 +39,9 @@ t_size	get_size(t_opt arg, t_elem *files)
 	while (cur)
 	{
 		if (!(arg.a == 0 && cur->name[0] == '.'))
+		{
 			get_size2(&size, cur);
+		}
 		cur = cur->next;
 	}
 	return (size);
