@@ -1,9 +1,6 @@
 
 #include "ft_ls.h"
 
-// -l -R -a -r -t -1
-
-
 int		analize_str(char *str)
 {
 	if (str && str[0] == '-')
