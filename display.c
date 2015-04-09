@@ -6,7 +6,7 @@
 /*   By: qmuntada <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/09 17:36:25 by qmuntada          #+#    #+#             */
-/*   Updated: 2015/04/09 17:45:20 by qmuntada         ###   ########.fr       */
+/*   Updated: 2015/04/09 19:22:17 by qmuntada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ void	ls_simple(t_opt arg, t_elem *files)
 	{
 		if (!(arg.a == 0 && cur->name[0] == '.'))
 		{
-			ft_color(cur->st_mode);
+			//ft_color(cur->st_mode);
 			ft_putendl(cur->name);
-			ft_putstr(C_NONE);
+			//ft_putstr(C_NONE);
 		}
 		cur = cur->next;
 	}
@@ -52,9 +52,9 @@ void	ls_long_file(t_opt arg, t_elem *cur, t_size size)
 	else
 		print_int(cur->st_size, size.size);
 	display_date(cur->date);
-	ft_color(cur->st_mode);
+	//ft_color(cur->st_mode);
 	ft_putendl(cur->name);
-	ft_putstr(C_NONE);
+	//ft_putstr(C_NONE);
 }
 
 void	ls_long(t_opt arg, t_elem *files)

@@ -6,7 +6,7 @@
 /*   By: qmuntada <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/09 17:36:52 by qmuntada          #+#    #+#             */
-/*   Updated: 2015/04/09 17:50:40 by qmuntada         ###   ########.fr       */
+/*   Updated: 2015/04/09 19:52:14 by qmuntada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	do_ls_dir(t_opt arg, t_list *path, int multidir)
 		if (files)
 		{
 			first == 1 ? ft_putchar('\n') : NULL;
-			if (multidir || arg._r)
+			if (multidir)
 			{
 				ft_putstr(dirlist->name);
 				ft_putstr(":\n");
@@ -92,8 +92,10 @@ void	core(t_opt arg, t_list *path)
 	while (cur)
 	{
 		if ((dir = opendir(cur->content)) == NULL)
+		{
 			errno != ENOTDIR ? basicerror("ft_ls: ", cur->content, 0) : \
 				ft_lstpushback(&file, cur->content, cur->content_size);
+		}
 		else
 		{
 			ft_lstpushback(&directory, cur->content, cur->content_size);
