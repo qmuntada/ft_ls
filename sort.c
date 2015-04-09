@@ -1,5 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: qmuntada <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/04/09 17:37:14 by qmuntada          #+#    #+#             */
+/*   Updated: 2015/04/09 17:48:15 by qmuntada         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_ls.h"
+
+t_elem	*sort_elem(t_elem *list, t_opt arg)
+{
+	t_elem	*new;
+
+	if (!list)
+		return (NULL);
+	new = list;
+	if (arg.f == 0)
+	{
+		sort(&new, cmp_alpha);
+		(arg.t == 1 || arg.u == 1) ? sort(&new, cmp_time) : NULL;
+		arg.r == 1 ? reversesort(&new) : NULL;
+	}
+	return (new);
+}
 
 void	elem_cpy(t_elem **src, t_elem *cpy)
 {
@@ -45,7 +72,7 @@ void	sort(t_elem **list, int (*cmp)(t_elem *elem1, t_elem *elem2))
 void	reversesort(t_elem **list)
 {
 	t_elem	*p;
-	t_elem *q;
+	t_elem	*q;
 	t_elem	*r;
 
 	p = *list;

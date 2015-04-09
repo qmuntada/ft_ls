@@ -1,35 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ls_core.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: qmuntada <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/04/09 17:36:52 by qmuntada          #+#    #+#             */
+/*   Updated: 2015/04/09 17:50:40 by qmuntada         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_elem	*sort_elem(t_elem *list, t_opt arg)
-{
-	t_elem	*new;
-
-	if (!list)
-		return (NULL);
-	new = list;
-	if (arg.f == 0)
-	{
-		sort(&new, cmp_alpha);
-		(arg.t == 1 || arg.u == 1) ? sort(&new, cmp_time) : NULL;
-		arg.r == 1 ? reversesort(&new) : NULL;
-	}
-	return (new);
-}
-
-void	display_file(t_opt arg, t_elem *files, int multidir)
+void	display_file(t_opt arg, t_elem *files)
 {
 	t_elem	*cur;
 
 	cur = files;
 	cur = sort_elem(cur, arg);
-	//if (multidir)
-//	{
-		//ft_putstr(cur->path);
-		//ft_putstr(":\n");
-//	}
 	(arg.l == 1 || arg.g == 1) ? \
-			ls_long(arg, cur, multidir) : ls_simple(arg, cur);
+			ls_long(arg, cur) : ls_simple(arg, cur);
 	arg._r == 1 ? recursion(arg, cur) : NULL;
 }
 
@@ -39,10 +29,12 @@ void	do_ls_dir(t_opt arg, t_list *path, int multidir)
 	t_elem	*files;
 	t_elem	*dirlist;
 	DIR *dir;
+	int		first;
 
 	cur = path;
 	files = NULL;
 	dirlist = NULL;
+	first = 0;
 	while (cur)
 	{
 		elemgetfiles(&dirlist, cur->content, "", arg);
@@ -57,13 +49,14 @@ void	do_ls_dir(t_opt arg, t_list *path, int multidir)
 			;
 		if (files)
 		{
+			first == 1 ? ft_putchar('\n') : NULL;
 			if (multidir || arg._r)
 			{
 				ft_putstr(dirlist->name);
 				ft_putstr(":\n");
 			}
-			display_file(arg, files, (multidir || arg._r));
-			files->next && multidir ? ft_putchar('\n') : NULL;
+			first = 1;
+			display_file(arg, files);
 		}
 		files = NULL;
 		dirlist = dirlist->next;
@@ -83,7 +76,7 @@ void	do_ls_file(t_opt arg, t_list *path)
 		cur = cur->next;
 	}
 	if (files)
-		display_file(arg, files, 0);
+		display_file(arg, files);
 }
 
 void	core(t_opt arg, t_list *path)
@@ -100,7 +93,7 @@ void	core(t_opt arg, t_list *path)
 	{
 		if ((dir = opendir(cur->content)) == NULL)
 			errno != ENOTDIR ? basicerror("ft_ls: ", cur->content, 0) : \
-				ft_lstpushback(&file ,cur->content, cur->content_size);
+				ft_lstpushback(&file, cur->content, cur->content_size);
 		else
 		{
 			ft_lstpushback(&directory, cur->content, cur->content_size);
@@ -111,5 +104,4 @@ void	core(t_opt arg, t_list *path)
 	}
 	file ? do_ls_file(arg, file) : NULL;
 	directory ? do_ls_dir(arg, directory, (directory->next != NULL)) : NULL;
-	//free(path); Need a real function that does free the list
 }

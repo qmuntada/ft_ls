@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   elem.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: qmuntada <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/04/09 17:36:29 by qmuntada          #+#    #+#             */
+/*   Updated: 2015/04/09 17:36:31 by qmuntada         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_ls.h"
 
@@ -7,7 +18,7 @@ t_elem	*elemnew(char *name, char *path, t_opt arg)
 	struct stat		fstat;
 
 	elem = malloc(sizeof(t_elem));
-	elem->name = name;
+	elem->name = ft_strdup(name);
 	elem->path = ft_strjoin(path, name);
 	if (lstat(elem->path, &fstat) == -1)
 	{

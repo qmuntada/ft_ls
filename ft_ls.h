@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_ls.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: qmuntada <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/04/09 17:36:48 by qmuntada          #+#    #+#             */
+/*   Updated: 2015/04/09 17:54:03 by qmuntada         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FT_LS_H
 # define FT_LS_H
 
@@ -53,35 +65,38 @@ typedef struct		s_size
 	int				maj;
 }					t_size;
 
-int		one_of(char c, char *str);
+int					one_of(char c, char *str);
 
-void	error_arg(char arg);
-void	basicerror(char *name, char *error, int ex);
+void				error_arg(char arg);
+void				basicerror(char *name, char *error, int ex);
 
-void	core(t_opt arg, t_list *path);
-void	display_file(t_opt arg, t_elem *files, int multidir);
+void				core(t_opt arg, t_list *path);
+void				display_file(t_opt arg, t_elem *files);
 
-int		elemget(t_elem **files, struct dirent *file, char *path, t_opt arg);
-void	elemgetfiles(t_elem **files, char *name, char *path, t_opt arg);
+int					elemget(t_elem **files, struct dirent *file, char *path, \
+						t_opt arg);
+void				elemgetfiles(t_elem **files, char *name, char *path, \
+						t_opt arg);
 
-void	display_date(time_t date);
+void				display_date(time_t date);
 
-void	sort(t_elem **list, int (*cmp)());
-void	reversesort(t_elem **list);
+t_elem				*sort_elem(t_elem *list, t_opt arg);
+void				sort(t_elem **list, int (*cmp)());
+void				reversesort(t_elem **list);
 
-int		cmp_alpha(t_elem *elem1, t_elem *elem2);
-int		cmp_time(t_elem *elem1, t_elem *elem2);
+int					cmp_alpha(t_elem *elem1, t_elem *elem2);
+int					cmp_time(t_elem *elem1, t_elem *elem2);
 
-void	recursion(t_opt arg, t_elem *files);
+void				recursion(t_opt arg, t_elem *files);
 
-void	ls_simple(t_opt arg, t_elem *files);
-void	ls_long(t_opt arg, t_elem *files, int dir);
+void				ls_simple(t_opt arg, t_elem *files);
+void				ls_long(t_opt arg, t_elem *files);
 
-t_size	get_size(t_opt arg, t_elem *files);
+t_size				get_size(t_opt arg, t_elem *files);
 
-void	print_access(t_elem *elem);
-void	print_int(int nlink, int spacemax);
-void	print_str(char *str, int spacemax);
-void	print_majmin(t_elem *file, t_size size);
+void				print_access(t_elem *elem);
+void				print_int(int nlink, int spacemax);
+void				print_str(char *str, int spacemax);
+void				print_majmin(t_elem *file, t_size size);
 
 #endif
