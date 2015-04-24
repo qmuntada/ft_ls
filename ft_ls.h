@@ -6,7 +6,7 @@
 /*   By: qmuntada <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/09 17:36:48 by qmuntada          #+#    #+#             */
-/*   Updated: 2015/04/09 17:54:03 by qmuntada         ###   ########.fr       */
+/*   Updated: 2015/04/24 16:54:42 by qmuntada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void				error_arg(char arg);
 void				basicerror(char *name, char *error, int ex);
 
 void				core(t_opt arg, t_list *path);
-void				display_file(t_opt arg, t_elem *files);
+void				display_file(t_opt arg, t_elem *files, int fileordir);
 
 int					elemget(t_elem **files, struct dirent *file, char *path, \
 						t_opt arg);
@@ -90,7 +90,7 @@ int					cmp_time(t_elem *elem1, t_elem *elem2);
 void				recursion(t_opt arg, t_elem *files);
 
 void				ls_simple(t_opt arg, t_elem *files);
-void				ls_long(t_opt arg, t_elem *files);
+void				ls_long(t_opt arg, t_elem *files, int fileordir);
 
 t_size				get_size(t_opt arg, t_elem *files);
 

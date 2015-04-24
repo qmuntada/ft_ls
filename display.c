@@ -6,13 +6,13 @@
 /*   By: qmuntada <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/09 17:36:25 by qmuntada          #+#    #+#             */
-/*   Updated: 2015/04/09 19:22:17 by qmuntada         ###   ########.fr       */
+/*   Updated: 2015/04/24 17:33:26 by qmuntada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	ft_color(mode_t mode)
+/*void	ft_color(mode_t mode)
 {
 	S_ISBLK(mode) ? ft_putstr(C_RED) : NULL;
 	S_ISCHR(mode) ? ft_putstr(C_BLUE) : NULL;
@@ -21,7 +21,7 @@ void	ft_color(mode_t mode)
 	S_ISREG(mode) ? ft_putstr(C_NONE) : NULL;
 	S_ISLNK(mode) ? ft_putstr(C_GREEN) : NULL;
 	S_ISSOCK(mode) ? ft_putstr(C_MAGENTA) : NULL;
-}
+}*/
 
 void	ls_simple(t_opt arg, t_elem *files)
 {
@@ -57,16 +57,19 @@ void	ls_long_file(t_opt arg, t_elem *cur, t_size size)
 	//ft_putstr(C_NONE);
 }
 
-void	ls_long(t_opt arg, t_elem *files)
+void	ls_long(t_opt arg, t_elem *files, int fileordir)
 {
 	t_elem	*cur;
 	t_size	size;
 
 	cur = files;
 	size = get_size(arg, files);
-	ft_putstr("total ");
-	ft_putnbr(size.total);
-	ft_putchar('\n');
+	if (fileordir)
+	{
+		ft_putstr("total ");
+		ft_putnbr(size.total);
+		ft_putchar('\n');
+	}
 	while (cur)
 	{
 		if (!(arg.a == 0 && cur->name[0] == '.'))

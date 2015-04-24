@@ -6,20 +6,20 @@
 /*   By: qmuntada <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/09 17:36:52 by qmuntada          #+#    #+#             */
-/*   Updated: 2015/04/09 19:52:14 by qmuntada         ###   ########.fr       */
+/*   Updated: 2015/04/24 16:55:02 by qmuntada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	display_file(t_opt arg, t_elem *files)
+void	display_file(t_opt arg, t_elem *files, int fileordir)
 {
 	t_elem	*cur;
 
 	cur = files;
 	cur = sort_elem(cur, arg);
 	(arg.l == 1 || arg.g == 1) ? \
-			ls_long(arg, cur) : ls_simple(arg, cur);
+			ls_long(arg, cur, fileordir) : ls_simple(arg, cur);
 	arg._r == 1 ? recursion(arg, cur) : NULL;
 }
 
@@ -56,7 +56,7 @@ void	do_ls_dir(t_opt arg, t_list *path, int multidir)
 				ft_putstr(":\n");
 			}
 			first = 1;
-			display_file(arg, files);
+			display_file(arg, files, 1);
 		}
 		files = NULL;
 		dirlist = dirlist->next;
@@ -76,7 +76,7 @@ void	do_ls_file(t_opt arg, t_list *path)
 		cur = cur->next;
 	}
 	if (files)
-		display_file(arg, files);
+		display_file(arg, files, 0);
 }
 
 void	core(t_opt arg, t_list *path)
@@ -105,5 +105,6 @@ void	core(t_opt arg, t_list *path)
 		cur = cur->next;
 	}
 	file ? do_ls_file(arg, file) : NULL;
+	file && directory ? ft_putchar('\n') : NULL;
 	directory ? do_ls_dir(arg, directory, (directory->next != NULL)) : NULL;
 }

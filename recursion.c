@@ -6,7 +6,7 @@
 /*   By: qmuntada <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/09 17:37:07 by qmuntada          #+#    #+#             */
-/*   Updated: 2015/04/09 17:49:44 by qmuntada         ###   ########.fr       */
+/*   Updated: 2015/04/24 16:55:57 by qmuntada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,16 @@ void	do_recursion(t_opt arg, char *path)
 	DIR *dir;
 
 	files = NULL;
+	ft_putchar('\n');
+	ft_putstr(path);
+	ft_putstr(":\n");
 	if ((dir = opendir(path)) != NULL)
 	{
 		while (elemget(&files, readdir(dir), \
 					ft_strjoin(path, "/"), arg) != 0)
 			;
 		if (files)
-		{
-			ft_putchar('\n');
-			ft_putstr(path);
-			ft_putstr(":\n");
-			display_file(arg, files);
-		}
+			display_file(arg, files, 1);
 		files = NULL;
 	}
 	else

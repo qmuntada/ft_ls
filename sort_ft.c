@@ -6,7 +6,7 @@
 /*   By: qmuntada <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/09 17:37:18 by qmuntada          #+#    #+#             */
-/*   Updated: 2015/04/09 17:37:19 by qmuntada         ###   ########.fr       */
+/*   Updated: 2015/04/24 16:49:39 by qmuntada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,5 @@ int		cmp_alpha(t_elem *elem1, t_elem *elem2)
 
 int		cmp_time(t_elem *elem1, t_elem *elem2)
 {
-	return ((int)elem1->date < (int)elem2->date);
+	return (elem1->date < elem2->date);
 }
