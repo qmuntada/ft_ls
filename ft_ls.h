@@ -6,7 +6,7 @@
 /*   By: qmuntada <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/09 17:36:48 by qmuntada          #+#    #+#             */
-/*   Updated: 2015/04/28 16:18:54 by qmuntada         ###   ########.fr       */
+/*   Updated: 2015/04/30 17:02:04 by qmuntada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 # include <string.h>
 # include <unistd.h>
 # include <errno.h>
+
+# define MAJOR(x)((int32_t)(((u_int32_t)(x) >> 24) & 0xff))
+# define MINOR(x)((int32_t)((x) & 0xffffff))
 
 typedef struct		s_opt
 {

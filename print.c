@@ -6,7 +6,7 @@
 /*   By: qmuntada <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/09 17:37:03 by qmuntada          #+#    #+#             */
-/*   Updated: 2015/04/28 16:38:42 by qmuntada         ###   ########.fr       */
+/*   Updated: 2015/04/30 17:15:36 by qmuntada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void	print_majmin(t_elem *file, t_size size)
 	int		min;
 	int		maj;
 
-	min = ft_strlen(ft_itoa(minor(file->st_rdev)));
-	maj = ft_strlen(ft_itoa(major(file->st_rdev)));
+	min = (int)ft_strlen(ft_itoa(minor(file->st_rdev)));
+	maj = (int)ft_strlen(ft_itoa(major(file->st_rdev)));
 	ft_putnbr(major(file->st_rdev));
 	while (maj < size.maj--)
 		ft_putchar(' ');
