@@ -6,7 +6,7 @@
 /*   By: qmuntada <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/09 17:36:25 by qmuntada          #+#    #+#             */
-/*   Updated: 2015/04/24 17:33:26 by qmuntada         ###   ########.fr       */
+/*   Updated: 2015/04/30 16:09:08 by qmuntada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,16 @@ void	ls_long_file(t_opt arg, t_elem *cur, t_size size)
 	print_access(cur);
 	print_int(cur->st_nlink, size.linkspace);
 	if (arg.g == 0)
-		print_str(getpwuid(cur->st_uid)->pw_name, size.userspace);
-	print_str(getgrgid(cur->st_gid)->gr_name, size.groupspace);
+	{
+		if (getpwuid(cur->st_uid))
+			print_str(getpwuid(cur->st_uid)->pw_name, size.userspace);
+		else
+			print_str(ft_itoa(cur->st_uid), size.userspace);
+	}
+	if (getgrgid(cur->st_gid))
+		print_str(getgrgid(cur->st_gid)->gr_name, size.groupspace);
+	else
+		print_str(ft_itoa(cur->st_gid), size.groupspace);
 	if (S_ISCHR(cur->st_mode) || S_ISBLK(cur->st_mode))
 		print_majmin(cur, size);
 	else

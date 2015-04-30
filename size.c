@@ -6,7 +6,7 @@
 /*   By: qmuntada <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/09 17:37:11 by qmuntada          #+#    #+#             */
-/*   Updated: 2015/04/09 17:47:55 by qmuntada         ###   ########.fr       */
+/*   Updated: 2015/04/30 15:59:11 by qmuntada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,22 @@ void	get_size2(t_size *size, t_elem *cur)
 	size->linkspace = (int)ft_strlen(ft_itoa(cur->st_nlink)) > \
 		size->linkspace ? (int)ft_strlen(ft_itoa(cur->st_nlink)) \
 		: size->linkspace;
-	size->userspace = (int)ft_strlen(getpwuid(cur->st_uid)->pw_name) \
-		> size->userspace ? (int)ft_strlen(getpwuid(cur->st_uid)->pw_name) \
-		: size->userspace;
-	size->groupspace = (int)ft_strlen(getgrgid(cur->st_gid)->gr_name) \
-		> size->groupspace ? (int)ft_strlen(getgrgid(cur->st_gid)->gr_name) \
-		: size->groupspace;
+	if (getpwuid(cur->st_uid))
+		size->userspace = (int)ft_strlen(getpwuid(cur->st_uid)->pw_name) \
+			> size->userspace ? (int)ft_strlen(getpwuid(cur->st_uid)->pw_name) \
+			: size->userspace;
+	else
+		size->userspace = (int)ft_strlen(ft_itoa(cur->st_uid)) \
+			> size->userspace ? (int)ft_strlen(ft_itoa(cur->st_uid)) \
+			: size->userspace;
+	if (getgrgid(cur->st_gid))
+		size->groupspace = (int)ft_strlen(getgrgid(cur->st_gid)->gr_name) \
+			> size->groupspace ? \
+			(int)ft_strlen(getgrgid(cur->st_gid)->gr_name) : size->groupspace;
+	else
+		size->groupspace = (int)ft_strlen(ft_itoa(cur->st_gid)) \
+			> size->groupspace ? (int)ft_strlen(ft_itoa(cur->st_gid)) \
+			: size->groupspace;
 	size->maj = (int)ft_strlen(ft_itoa(major(cur->st_rdev))) > size->maj \
 		? (int)ft_strlen(ft_itoa(major(cur->st_rdev))) : size->maj;
 	size->min = (int)ft_strlen(ft_itoa(minor(cur->st_rdev))) > size->min ? \
@@ -45,7 +55,5 @@ t_size	get_size(t_opt arg, t_elem *files)
 			get_size2(&size, cur);
 		cur = cur->next;
 	}
-	size.size = size.size < size.maj + size.min ? \
-		size.maj + size.min : size.size;
 	return (size);
 }

@@ -6,7 +6,7 @@
 /*   By: qmuntada <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/09 17:36:59 by qmuntada          #+#    #+#             */
-/*   Updated: 2015/04/09 19:11:57 by qmuntada         ###   ########.fr       */
+/*   Updated: 2015/04/28 16:44:54 by qmuntada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ void	get_arg(t_opt *arg, char *str)
 {
 	int		i;
 
-	i = -1;
+	i = 0;
 	while (str[++i])
 	{
-		if (one_of(str[i], "-1lRafgrtu"))
+		if (one_of(str[i], "1lRafgrtu") || (str[1] == '-' && !str[2]))
 		{
 			arg->l = (str[i] == 'l' ? 1 : arg->l);
 			arg->_r = (str[i] == 'R' ? 1 : arg->_r);
@@ -38,6 +38,7 @@ void	get_arg(t_opt *arg, char *str)
 			arg->l = (str[i] == 'f' ? 0 : arg->l);
 			arg->a = (str[i] == 'f' ? 1 : arg->a);
 			arg->g = (str[i] == 'g' ? 1 : arg->g);
+			arg->l = (str[i] == '1' ? 0 : arg->l);
 		}
 		else
 			error_arg(str[i]);
@@ -73,6 +74,6 @@ int		main(int ac, char **av)
 		get_param(ac - 1, av, &arg, &path);
 	if (path == NULL)
 		path = ft_lstnew(".", ft_strlen("."));
-	core(arg, path);
+	core(arg, path, path->next != NULL ? 1 : 0);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: qmuntada <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/09 17:36:52 by qmuntada          #+#    #+#             */
-/*   Updated: 2015/04/24 16:55:02 by qmuntada         ###   ########.fr       */
+/*   Updated: 2015/04/30 15:59:26 by qmuntada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	do_ls_dir(t_opt arg, t_list *path, int multidir)
 		while (elemget(&files, readdir(dir), \
 			ft_strjoin(dirlist->path, "/"), arg) != 0)
 			;
+		closedir(dir);
 		if (files)
 		{
 			first == 1 ? ft_putchar('\n') : NULL;
@@ -79,7 +80,7 @@ void	do_ls_file(t_opt arg, t_list *path)
 		display_file(arg, files, 0);
 }
 
-void	core(t_opt arg, t_list *path)
+void	core(t_opt arg, t_list *path, int multidir)
 {
 	DIR		*dir;
 	t_list	*file;
@@ -106,5 +107,5 @@ void	core(t_opt arg, t_list *path)
 	}
 	file ? do_ls_file(arg, file) : NULL;
 	file && directory ? ft_putchar('\n') : NULL;
-	directory ? do_ls_dir(arg, directory, (directory->next != NULL)) : NULL;
+	directory ? do_ls_dir(arg, directory, multidir) : NULL;
 }
