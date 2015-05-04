@@ -6,7 +6,7 @@
 /*   By: qmuntada <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/13 16:04:03 by qmuntada          #+#    #+#             */
-/*   Updated: 2015/02/05 16:54:10 by qmuntada         ###   ########.fr       */
+/*   Updated: 2015/05/04 17:22:34 by qmuntada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int		line_verif(char **line, char **tmp, int res, char **str)
 
 char	*read_line(char *tmp)
 {
-	size_t			t;
-	char			*line;
+	size_t	t;
+	char	*line;
 
 	t = 0;
 	while (tmp[t] != '\n')
@@ -55,12 +55,12 @@ char	*cpycat(char *s1, char *s2)
 	return (tmp);
 }
 
-int					get_next_line(int const fd, char **line)
+int		get_next_line(int const fd, char **line)
 {
-	static char				*str;
-	int						res;
-	char					*buf;
-	char					*tmp;
+	static char		*str;
+	int				res;
+	char			*buf;
+	char			*tmp;
 
 	if (fd < 0 || !line || BUFF_SIZE < 1 || BUFF_SIZE > 10000000)
 		return (-1);

@@ -6,7 +6,7 @@
 /*   By: qmuntada <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/09 17:36:59 by qmuntada          #+#    #+#             */
-/*   Updated: 2015/04/28 16:44:54 by qmuntada         ###   ########.fr       */
+/*   Updated: 2015/05/04 17:20:40 by qmuntada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	get_arg(t_opt *arg, char *str)
 		if (one_of(str[i], "1lRafgrtu") || (str[1] == '-' && !str[2]))
 		{
 			arg->l = (str[i] == 'l' ? 1 : arg->l);
-			arg->_r = (str[i] == 'R' ? 1 : arg->_r);
+			arg->upper_r = (str[i] == 'R' ? 1 : arg->upper_r);
 			arg->a = (str[i] == 'a' ? 1 : arg->a);
 			arg->r = (str[i] == 'r' ? 1 : arg->r);
 			arg->t = (str[i] == 't' ? 1 : arg->t);

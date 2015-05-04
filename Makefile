@@ -6,7 +6,7 @@
 #    By: achauvea <achauvea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/10 08:23:40 by achauvea          #+#    #+#              #
-#    Updated: 2015/01/20 10:37:29 by achauvea         ###   ########.fr        #
+#    Updated: 2015/05/04 17:24:35 by qmuntada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,8 +29,7 @@ clean:
 	@make -C libft/ clean
 	@rm -rf $(OBJ)
 
-fclean:
-	@make -C libft/ fclean
+fclean: clean
 	@rm -rf $(NAME) $(OBJ)
 
 re: fclean $(NAME)

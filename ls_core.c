@@ -6,7 +6,7 @@
 /*   By: qmuntada <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/09 17:36:52 by qmuntada          #+#    #+#             */
-/*   Updated: 2015/04/30 15:59:26 by qmuntada         ###   ########.fr       */
+/*   Updated: 2015/05/04 17:20:27 by qmuntada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,27 +20,17 @@ void	display_file(t_opt arg, t_elem *files, int fileordir)
 	cur = sort_elem(cur, arg);
 	(arg.l == 1 || arg.g == 1) ? \
 			ls_long(arg, cur, fileordir) : ls_simple(arg, cur);
-	arg._r == 1 ? recursion(arg, cur) : NULL;
+	arg.upper_r == 1 ? recursion(arg, cur) : NULL;
 }
 
-void	do_ls_dir(t_opt arg, t_list *path, int multidir)
+void	do_ls_dir2(t_opt arg, t_elem *dirlist, int multidir)
 {
-	t_list	*cur;
+	DIR		*dir;
 	t_elem	*files;
-	t_elem	*dirlist;
-	DIR *dir;
 	int		first;
 
-	cur = path;
-	files = NULL;
-	dirlist = NULL;
 	first = 0;
-	while (cur)
-	{
-		elemgetfiles(&dirlist, cur->content, "", arg);
-		cur = cur->next;
-	}
-	dirlist = sort_elem(dirlist, arg);
+	files = NULL;
 	while (dirlist)
 	{
 		dir = opendir(dirlist->name);
@@ -51,17 +41,29 @@ void	do_ls_dir(t_opt arg, t_list *path, int multidir)
 		if (files)
 		{
 			first == 1 ? ft_putchar('\n') : NULL;
-			if (multidir)
-			{
-				ft_putstr(dirlist->name);
-				ft_putstr(":\n");
-			}
+			multidir ? ft_putendl(ft_strjoin(dirlist->name, ":")) : NULL;
 			first = 1;
 			display_file(arg, files, 1);
 		}
 		files = NULL;
 		dirlist = dirlist->next;
 	}
+}
+
+void	do_ls_dir(t_opt arg, t_list *path, int multidir)
+{
+	t_list	*cur;
+	t_elem	*dirlist;
+
+	cur = path;
+	dirlist = NULL;
+	while (cur)
+	{
+		elemgetfiles(&dirlist, cur->content, "", arg);
+		cur = cur->next;
+	}
+	dirlist = sort_elem(dirlist, arg);
+	do_ls_dir2(arg, dirlist, multidir);
 }
 
 void	do_ls_file(t_opt arg, t_list *path)
@@ -71,6 +73,7 @@ void	do_ls_file(t_opt arg, t_list *path)
 
 	cur = path;
 	files = NULL;
+	arg.a = 1;
 	while (cur)
 	{
 		elemgetfiles(&files, cur->content, "", arg);
@@ -93,10 +96,8 @@ void	core(t_opt arg, t_list *path, int multidir)
 	while (cur)
 	{
 		if ((dir = opendir(cur->content)) == NULL)
-		{
 			errno != ENOTDIR ? basicerror("ft_ls: ", cur->content, 0) : \
 				ft_lstpushback(&file, cur->content, cur->content_size);
-		}
 		else
 		{
 			ft_lstpushback(&directory, cur->content, cur->content_size);

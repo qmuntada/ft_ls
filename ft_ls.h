@@ -6,7 +6,7 @@
 /*   By: qmuntada <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/09 17:36:48 by qmuntada          #+#    #+#             */
-/*   Updated: 2015/04/30 17:02:04 by qmuntada         ###   ########.fr       */
+/*   Updated: 2015/05/04 17:20:13 by qmuntada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 typedef struct		s_opt
 {
 	int				l;
-	int				_r;
+	int				upper_r;
 	int				a;
 	int				r;
 	int				t;

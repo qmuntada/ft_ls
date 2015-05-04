@@ -6,7 +6,7 @@
 /*   By: qmuntada <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/09 17:37:07 by qmuntada          #+#    #+#             */
-/*   Updated: 2015/04/30 15:45:41 by qmuntada         ###   ########.fr       */
+/*   Updated: 2015/04/30 17:43:09 by qmuntada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	do_recursion(t_opt arg, char *path)
 {
 	t_elem	*files;
-	DIR *dir;
+	DIR		*dir;
 
 	files = NULL;
 	ft_putchar('\n');
@@ -39,7 +39,6 @@ void	recursion(t_opt arg, t_elem *files)
 {
 	t_elem	*cur;
 
-	(void)arg;
 	cur = files;
 	while (cur)
 	{
